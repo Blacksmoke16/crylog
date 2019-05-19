@@ -8,7 +8,7 @@ module Crylog::Formatters
     def initialize(@allow_line_breaks : Bool = false); end
 
     # Consumes a *message* and returns a formatted string representation of it.
-    def format(message : Crylog::Message) : String
+    def call(message : Crylog::Message) : String
       String.build do |str|
         str << '[' << message.datetime.to_rfc3339 << ']' << ' '
         str << message.channel << '.' << message.severity.to_s.upcase << ':' << ' '

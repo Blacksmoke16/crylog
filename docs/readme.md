@@ -11,7 +11,7 @@ Crylog is a flexible logging framework based on [Monolog](https://github.com/Sel
 
 ### Severity
 
-`Crylog` uses the log levels as described in [RFC-5424](https://tools.ietf.org/html/rfc5424#section-6.2.1):
+`Crylog` uses the log levels as described in [RFC 5424](https://tools.ietf.org/html/rfc5424#section-6.2.1):
 
 - Emergency: system is unusable
 - Alert: action must be taken immediately
@@ -166,7 +166,7 @@ end
 
 ## Processor
 
-A processor allows metadata to be added to all logged messages passing through a given `Logger` instance, via the message’s `extra` property.  A handler can also have processors specific to that handler.  A processor can either be an instance of `Crylog::Processors::LogProcessor` struct or a `Proc(Crylog::Message, Nil)`.
+A processor allows metadata to be added to all logged messages passing through a given `Logger` instance, via the message’s `extra` property.  A handler can also have processors specific to that handler.  A processor can either be a `Proc(Crylog::Message, Nil)` or an instance of `Crylog::Processors::LogProcessor` for more complex processing.
 
 ```crystal
 require "crylog"
@@ -195,7 +195,7 @@ The main benefit of a processor, is adding information that would apply to _EVER
 
 ### Custom Processors
 
-`Crylog` comes with some example processors, but most commonly these would be specific to a project.  To create a custom processor, simply create a struct that inherits from `Crylog::Processors::LogProcessor` that implements a `call(msg : Message) : Nil` method.
+`Crylog` comes with some example processors, but most commonly these would be specific to a project.  To create a custom processor, simply create a struct that inherits from `Crylog::Processors::LogProcessor` that implements a `call(message : Message) : Nil` method.
 
 ```crystal
 require "crylog"
@@ -204,8 +204,8 @@ struct MyProcessor < Crylog::Processors::LogProcessor
   # Initializers can also be defined to give the processor access to external data.
   def initialize(@env : String); end  
   
-  def call(msg : Crylog::Message) : Nil
-    msg.extra["current_env"] = @env
+  def call(message : Crylog::Message) : Nil
+    message.extra["current_env"] = @env
   end
 end
 
@@ -225,3 +225,67 @@ main_logger = Crylog.logger
 main_logger.info "Some event"
 STDOUT # => [2019-05-19T02:07:14.081841000Z] main.INFO: Some event {"current_env":"development"}
 ```
+
+## Formatters
+
+A formatter alters how a logged message will be serialized.  Each handler has a sane default for its purpose, but can also be changed.  For example messages being logged to a file would not have the same formatting needs as sending an email, or POSTing to an external service.
+
+A formatter can either be a `Proc(Crylog::Message, String)` or an instance of `Crylog::Formatters::LogFormatter` if more complex formatting is required.  
+
+```crystal
+require "crylog"
+
+# Instantiate a new IOHandler
+io_handler = Crylog::Handlers::IOHandler.new(STDOUT)
+# Change its format to recreate Crystal's Logger format
+io_handler.formatter = ->(message : Crylog::Message) do
+  String.build do |str|
+    severity = message.severity.to_s.upcase
+    str << severity[0] << ", [" << message.datetime << " #" << Process.pid << "] "
+    str << severity << " -- " << message.channel << ": " << message.message
+    str << ' ' << message.context.to_json << ' ' << message.extra.to_json
+  end
+end
+
+Crylog.configure do |registry|
+  registry.register "main" do |logger|
+    logger.handlers = [io_handler] of Crylog::Handlers::LogHandler
+  end
+end
+
+main_logger = Crylog.logger
+main_logger.info "Custom format"
+STDOUT # => I, [2019-05-19 22:46:33 UTC #17775] INFO -- main: Custom format {} {}
+```
+
+### Custom Formatters
+
+To create a custom formatter, simply create a struct that inherits from `Crylog::Formatters::LogFormatter` that implements a `call(message : Message) : String` method, where the returned value is the formatted string representation of the the message.
+
+```crystal
+require "crylog"
+
+struct MyFormatter < Crylog::Formatters::LogFormatter
+  def call(message : Crylog::Message) : String
+    String.build do |str|
+      str << message.message << ' ' << "Logged at #{message.datetime}"
+    end
+  end
+end
+
+Crylog.configure do |registry|
+  registry.register "main" do |logger|
+    handler = Crylog::Handlers::IOHandler.new(STDOUT)
+    handler.formatter = MyFormatter.new
+    logger.handlers = [handler] of Crylog::Handlers::LogHandler
+  end
+end
+
+main_logger = Crylog.logger
+main_logger.info "Some event"
+STDOUT # => Some event Logged at 2019-05-19 22:53:17 UTC
+```
+
+### Overriding Default Formatter
+
+A handler can also override the `default_formatter : Crylog::Formatters::LogFormatter` method, which returns the formatter to use for that handler and its children.  This is most helpful for when working with abstract handlers, for example there could be an an `abstract struct MailHandler` that overrides it and sets the default formatter to use an HTML formatter.

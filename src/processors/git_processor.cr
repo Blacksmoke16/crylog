@@ -1,8 +1,8 @@
 require "./processor"
 
-module Crylog::Processor
+module Crylog::Processors
   # Includes the Git branch and SHA commit hash in all logged messages.
-  struct GitProcessor < Crylog::Processor::LogProcessor
+  struct GitProcessor < Crylog::Processors::LogProcessor
     # Adds metadata to *message*.
     def call(message : Crylog::Message) : Nil
       current_branch = `git branch -v --no-abbrev`

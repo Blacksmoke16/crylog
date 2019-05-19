@@ -13,10 +13,10 @@ module Crylog
     # When the message was logged.
     getter datetime : Time
 
-    # Any extra context added by `Crylog::Processor`s.
+    # Any extra metadata added by a `Crylog::Processors::LogProcessor`.
     property extra : Hash(String, Crylog::Context)
 
-    # Any extra context added when the message was logged.
+    # Any extra metadata added when the message was logged.
     getter context : Hash(String, Crylog::Context)
 
     # Represents the formatted version of this message.

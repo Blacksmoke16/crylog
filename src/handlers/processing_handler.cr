@@ -8,10 +8,10 @@ module Crylog::Handlers
   # Most handlers can inherit from this and implement `#write`.
   abstract struct ProcessingLogHandler < Crylog::Handlers::AbstractLogHandler
     include Crylog::Formatters::Formattable
-    include Crylog::Processor::Processable
+    include Crylog::Processors::Processable
 
-    # Writes *message* down to the log of the implementing handler
-    protected abstract def write(message : Message) : Nil
+    # Writes *message* down to the log of the implementing handler.
+    protected abstract def write(message : Crylog::Message) : Nil
 
     # Handles a logged message.
     #
@@ -25,7 +25,7 @@ module Crylog::Handlers
       @processors.each &.call message
 
       # Call the formatter to format *message*.
-      message.formatted = formatter.format message
+      message.formatted = formatter.call message
 
       # write the message
       write message

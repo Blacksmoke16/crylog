@@ -1,5 +1,5 @@
 module Crylog
-  # Logging levels as defined by [RFC 5424](http://tools.ietf.org/html/rfc5424).
+  # Logging levels as defined by [RFC 5424](https://tools.ietf.org/html/rfc5424#section-6.2.1).
   enum Severity
     # Detailed debugging information.
     Debug = 100
@@ -41,7 +41,7 @@ module Crylog
     getter handlers : Array(Crylog::Handlers::LogHandler) = [] of Crylog::Handlers::LogHandler
 
     # Processors registered on `self`.
-    getter processors : Array(Crylog::Processor::LogProcessors) = [] of Crylog::Processor::LogProcessors
+    getter processors : Array(Crylog::Processors::LogProcessors) = [] of Crylog::Processors::LogProcessors
 
     # Sets the handlers to use for `self`.
     def handlers=(handlers : Array(Crylog::Handlers::LogHandler)) : self
