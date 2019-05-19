@@ -1,12 +1,14 @@
-module Crylog
+module Crylog::Formatters
   # Formats the message to fit on a single line.
-  struct LineFormatter < Crylog::LogFormatter
+  struct LineFormatter < Crylog::Formatters::LogFormatter
     # Whether line breaks within a message should be stripped out.
     property allow_line_breaks : Bool = false
 
+    # Instantiates `self`, stripping out out line breaks unless *allow_line_breaks*.
     def initialize(@allow_line_breaks : Bool = false); end
 
-    def format(msg : Message) : String
+    # Consumes a *msg* and returns a formatted string representation of `Crylog::Message`.
+    def format(msg : Crylog::Message) : String
       String.build do |str|
         str << '[' << msg.datetime.to_rfc3339 << ']' << ' '
         str << msg.channel << '.' << msg.severity.to_s.upcase << ':' << ' '

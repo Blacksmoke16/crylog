@@ -37,20 +37,20 @@ module Crylog
 
   # A logger instance.
   struct Logger
-    # The handlers that will do something with each message.
-    getter handlers : Array(LogHandler) = [] of LogHandler
+    # The handlers registered on `self`.
+    getter handlers : Array(Crylog::Handlers::LogHandler) = [] of Crylog::Handlers::LogHandler
 
-    # Processors that can add additional information to each message.
-    getter processors : Array(LogProcessors) = [] of LogProcessors
+    # Processors registered on `self`.
+    getter processors : Array(Crylog::Processor::LogProcessors) = [] of Crylog::Processor::LogProcessors
 
     # Sets the handlers to use for `self`.
-    def handlers=(handlers : Array(LogHandler)) : self
+    def handlers=(handlers : Array(Crylog::Handlers::LogHandler)) : self
       @handlers = handlers
       self
     end
 
     # Sets the processors to use for `self`.
-    def processors=(processors : Array(LogProcessors)) : self
+    def processors=(processors : Array(Crylog::Handlers::LogProcessors)) : self
       @processors = processors
       self
     end
@@ -58,16 +58,16 @@ module Crylog
     # Creates a new `Logger` with the provided *channel*.
     def initialize(@channel : String); end
 
-    {% for name in Severity.constants %}
-      # Logs the *message* and optionally *context*.
-      def {{name.id.downcase}}(message : String, context : LogContext = Hash(String, Context).new) : Nil
-        log Severity::{{name.id}}, message, context
+    {% for name in Crylog::Severity.constants %}
+      # Logs *message* and optionally *context* with `Crylog::Severity::{{name}}` severity.
+      def {{name.id.downcase}}(message : String, context : Crylog::LogContext = Hash(String, Crylog::Context).new) : Nil
+        log Crylog::Severity::{{name.id}}, message, context
       end
     {% end %}
 
     # :nodoc:
-    private def log(severity : Severity, message : String, context : LogContext = Hash(String, Context).new) : Nil
-      msg = Message.new message, context, severity, @channel, Time.utc, Hash(String, Context).new
+    private def log(severity : Severity, message : String, context : Crylog::LogContext = Hash(String, Crylog::Context).new) : Nil
+      msg = Message.new message, context, severity, @channel, Time.utc, Hash(String, Crylog::Context).new
 
       # Return early if no handlers handle this message.
       return false if @handlers.none?(&.handles?(msg))

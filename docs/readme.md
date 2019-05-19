@@ -4,7 +4,7 @@ Crylog is a flexible logging framework based on [Monolog](https://github.com/Sel
 
 ## Core Concepts
 
-* Logger - An instance of `Logger` that logs messages, optionally with context. 
+* Logger - An instance of `Crylog::Logger` that logs messages, optionally with context. 
 * Handler - Writes the log message to somewhere/something.
 * Processor - Adds metadata to each logged message.
 * Formatter - Determines how a logged message appears.
@@ -26,9 +26,9 @@ Convenience methods are defined for each i.e. `logger.info`, `logger.alert`, etc
 
 ## Logger
 
-The core class of `Crylog` is the `Logger`.  A `Logger` instance is what is used to log a message.  Each instance has a name, or channel, that is used to identify that specific `Logger` instance.  
+The core class of `Crylog` is the `Crylog::Logger`.  A `Crylog::Logger` instance is what is used to log a message.  Each instance has a name, or channel, that is used to identify that specific `Logger` instance.  
 
-`Logger` instances can be defined via the `Crylog.configure` method.
+`Crylog::Logger` instances can be defined via the `Crylog.configure` method.
 
 ```crystal
 require "crylog"
@@ -36,21 +36,21 @@ require "crylog"
 Crylog.configure do |registry|
   registry.register "main" do |logger|
     logger.handlers = [
-      Crylog::IOHandler.new(STDOUT)
-    ] of Crylog::LogHandler
+      Crylog::Handlers::IOHandler.new(STDOUT)
+    ] of Crylog::Handlers::LogHandler
   end
 
   registry.register "worker" do |logger|
     logger.handlers = [
-      Crylog::IOHandler.new(STDOUT)
-    ] of Crylog::LogHandler
+      Crylog::Handlers::IOHandler.new(STDOUT)
+    ] of Crylog::Handlers::LogHandler
   end
 end
 ```
 
-This registers two `Logger` instances with the name `main`, and `worker` each with a single handler that will print each message to standard out.  Each `Logger` instance can have their own handlers, processors, and formatters.
+This registers two `Logger` instances with the name `main`, and `worker` each with a single handler that will print each message to standard out.  Each `Crylog::Logger` instance can have their own handlers, processors, and formatters.
 
-A `Logger` instance can be retrieved by using the `Crylog.logger(channel : String)` method.
+A `Crylog::Logger` instance can be retrieved by using the `Crylog.logger(channel : String)` method.
 
 ```crystal
 main_logger = Crylog.logger
@@ -82,7 +82,7 @@ A handler is a struct that handles the actual writing/sending of the logged mess
 
 ### Handles?
 
-A handler can be passed a `Crylog::Severity` to designate the minimum level this handler should handle.  A common usage would be having an `IOHandler` logging all messages to a file, but have another handler that would send an email if the severity is an `Error`.
+A handler can be passed a `Crylog::Severity` to designate the minimum level this handler should handle.  A common usage would be having an `Crylog::Handlers::IOHandler` logging all messages to a file, but have another handler that would send an email if the severity is an `Error`.
 
 ```crystal
 require "crylog"
@@ -90,8 +90,8 @@ require "crylog"
 Crylog.configure do |registry|
   registry.register "main" do |logger|
     logger.handlers = [
-      Crylog::IOHandler.new(STDOUT, severity: Crylog::Severity::Alert)
-    ] of Crylog::LogHandler
+      Crylog::Handlers::IOHandler.new(STDOUT, severity: Crylog::Severity::Alert)
+    ] of Crylog::Handlers::LogHandler
   end
 end
 
@@ -105,7 +105,7 @@ STDOUT # => [2019-05-19T01:05:55.639948000Z] main.EMERGENCY: Urgent!
 A specific handler can also override the `handles?(message : Crylog::Message) : Bool` to implement custom logic of if it should handle a message.
 
 ```crystal
-struct SomeHandler < Crylog::ProcessingLogHandler
+struct SomeHandler < Crylog::Handlers::ProcessingLogHandler
   ...
   def handles?(message : Crylog::Message) : Bool
     # Some custom logic
@@ -123,9 +123,9 @@ require "crylog"
 Crylog.configure do |registry|
   registry.register "main" do |logger|
     logger.handlers = [
-      Crylog::IOHandler.new(STDOUT, bubble: false),
-      Crylog::IOHandler.new(STDOUT),
-    ] of Crylog::LogHandler
+      Crylog::Handlers::IOHandler.new(STDOUT, bubble: false),
+      Crylog::Handlers::IOHandler.new(STDOUT),
+    ] of Crylog::Handlers::LogHandler
   end
 end
 
@@ -137,12 +137,12 @@ STDOUT # => The message is only printed once since the first `IOHandler` does no
 
 ### Custom Handlers
 
-Custom handlers can also be defined.  Most of the time this would just involve creating a struct that inherits from `Crylog::ProcessingHandler`, and implement a `write(message : Crylog::Message) : Nil` method.  Then use it when configuring your `Logger` instances.
+Custom handlers can also be defined.  Most of the time this would just involve creating a struct that inherits from `Crylog::Handlers::ProcessingHandler`, and implement a `write(message : Crylog::Message) : Nil` method.  Then use it when configuring your `Logger` instances.
 
 ```crystal
 require "crylog"
 
-struct CustomHandler < Crylog::ProcessingLogHandler
+struct CustomHandler < Crylog::Handlers::ProcessingLogHandler
   # Could define a custom initializer to pass handler specific
   # to the handler such as: data API keys, API clients etc.
   def initialize(@api_key : String, severity : Crylog::Severity = Crylog::Severity::Debug, bubble : Bool = true)
@@ -150,7 +150,7 @@ struct CustomHandler < Crylog::ProcessingLogHandler
   end
 
   # The logic to actually write the log message
-  protected def write(message : Message)
+  protected def write(message : Crylog::Message)
     # Do something
   end
 end
@@ -159,14 +159,14 @@ Crylog.configure do |registry|
   registry.register "main" do |logger|
     logger.handlers = [
       CustomHandler.new("MY_API_KEY"),
-    ] of Crylog::LogHandler
+    ] of Crylog::Handlers::LogHandler
   end
 end
 ```
 
 ## Processor
 
-A processor allows metadata to be added to all logged messages passing through a given `Logger` instance, via the message’s `extra` property.  A handler can also have processors specific to that handler.  A processor can either be an instance of `LogProcessor` struct or a `Proc(Crylog::Message, Nil)`.
+A processor allows metadata to be added to all logged messages passing through a given `Logger` instance, via the message’s `extra` property.  A handler can also have processors specific to that handler.  A processor can either be an instance of `Crylog::Processors::LogProcessor` struct or a `Proc(Crylog::Message, Nil)`.
 
 ```crystal
 require "crylog"
@@ -174,15 +174,15 @@ require "crylog"
 Crylog.configure do |registry|
   registry.register "main" do |logger|
     logger.handlers = [
-      Crylog::IOHandler.new(STDOUT),
-    ] of Crylog::LogHandler
+      Crylog::Handlers::IOHandler.new(STDOUT),
+    ] of Crylog::Handlers::LogHandler
 
     logger.processors = [
       ->(message : Crylog::Message) do
         message.extra["some_key"] = "Hello world!"
         nil
       end,
-    ] of Crylog::LogProcessors
+    ] of Crylog::Processors::LogProcessors
   end
 end
 
@@ -195,12 +195,12 @@ The main benefit of a processor, is adding information that would apply to _EVER
 
 ### Custom Processors
 
-`Crylog` comes with some example processors, but most commonly these would be specific to a project.  To create a custom processor, simply create a struct that inherits from `Crylog::LogProcessor` that implements a `call(msg : Message) : Nil` method.
+`Crylog` comes with some example processors, but most commonly these would be specific to a project.  To create a custom processor, simply create a struct that inherits from `Crylog::Processors::LogProcessor` that implements a `call(msg : Message) : Nil` method.
 
 ```crystal
 require "crylog"
 
-struct MyProcessor < Crylog::LogProcessor
+struct MyProcessor < Crylog::Processors::LogProcessor
   # Initializers can also be defined to give the processor access to external data.
   def initialize(@env : String); end  
   
@@ -212,12 +212,12 @@ end
 Crylog.configure do |registry|
   registry.register "main" do |logger|
     logger.handlers = [
-      Crylog::IOHandler.new(STDOUT),
-    ] of Crylog::LogHandler
+      Crylog::Handlers::IOHandler.new(STDOUT),
+    ] of Crylog::Handlers::LogHandler
 
     logger.processors = [
       MyProcessor.new ENV["ENV"],
-    ] of Crylog::LogProcessors
+    ] of Crylog::Processors::LogProcessors
   end
 end
 

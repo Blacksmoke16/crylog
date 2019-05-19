@@ -1,9 +1,9 @@
 require "./handler"
 
-module Crylog
+module Crylog::Handlers
   # Implements *severity* and *bubble* functionality.
-  abstract struct AbstractLogHandler < LogHandler
-    # The minimum severity that this handler should handle.
+  abstract struct AbstractLogHandler < Crylog::Handlers::LogHandler
+    # The minimum *severity* that this handler should handle.
     property severity : Crylog::Severity = Crylog::Severity::Debug
 
     # Whether the message should be handled by the next handler.

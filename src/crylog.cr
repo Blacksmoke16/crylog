@@ -7,6 +7,7 @@ require "./message"
 require "./processors/*"
 require "./registry"
 
+# A flexible logging framework for Crystal.
 module Crylog
   # :nodoc:
   alias Context = Nil | String | Int8 | Int16 | Int32 | Int64 | UInt8 | UInt16 | UInt32 | UInt64 | Float32 | Float64 | Bool | Hash(String, Context)

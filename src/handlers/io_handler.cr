@@ -1,14 +1,15 @@
 require "./processing_handler"
 
-module Crylog
+module Crylog::Handlers
   # Allows writing to any IO; files, STDOUT, etc.
-  struct IOHandler < ProcessingLogHandler
+  struct IOHandler < Crylog::Handlers::ProcessingLogHandler
     # Writes the message to the given *io*.  If *lock*, and *io* is a file, locks the file before writing.
     def initialize(@io : IO, @lock : Bool = false, severity : Crylog::Severity = Crylog::Severity::Debug, bubble : Bool = true)
       super severity, bubble
     end
 
-    def write(message : Message)
+    # Writes *message* to the given *io*.
+    def write(message : Crylog::Message)
       if (io = @io) && io.is_a?(File) && @lock
         io.flock_exclusive
       end
