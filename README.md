@@ -6,7 +6,7 @@ Flexible logging framework based on [Monolog](https://github.com/Seldaek/monolog
 
 ## Documentation
 
-[Documentation](https://github.com/Blacksmoke16/crylog/tree/master/docs)
+[Documentation](./docs)
 
 ## Installation
 
