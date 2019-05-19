@@ -1,6 +1,6 @@
 # Adds metadata to each logged message.
 module Crylog::Processor
-  # :nodoc:
+  # The possible types of a `Crylog::Processor`.
   alias LogProcessors = Crylog::Processor::LogProcessor | Proc(Crylog::Message, Nil)
 
   abstract struct LogProcessor

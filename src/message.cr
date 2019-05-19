@@ -14,14 +14,14 @@ module Crylog
     getter datetime : Time
 
     # Any extra context added by `Crylog::Processor`s.
-    property extra : Hash(String, Context)
+    property extra : Hash(String, Crylog::Context)
 
     # Any extra context added when the message was logged.
-    getter context : Hash(String, Context)
+    getter context : Hash(String, Crylog::Context)
 
     # Represents the formatted version of this message.
     property formatted : String = ""
 
-    def initialize(@message : String, @context : Hash(String, Context), @severity : Crylog::Severity, @channel : String, @datetime : Time, @extra : Hash(String, Context)); end
+    def initialize(@message : String, @context : Hash(String, Crylog::Context), @severity : Crylog::Severity, @channel : String, @datetime : Time, @extra : Hash(String, Crylog::Context)); end
   end
 end
