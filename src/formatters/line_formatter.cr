@@ -7,14 +7,14 @@ module Crylog::Formatters
     # Instantiates `self`, stripping out out line breaks unless *allow_line_breaks*.
     def initialize(@allow_line_breaks : Bool = false); end
 
-    # Consumes a *msg* and returns a formatted string representation of `Crylog::Message`.
-    def format(msg : Crylog::Message) : String
+    # Consumes a *message* and returns a formatted string representation of it.
+    def format(message : Crylog::Message) : String
       String.build do |str|
-        str << '[' << msg.datetime.to_rfc3339 << ']' << ' '
-        str << msg.channel << '.' << msg.severity.to_s.upcase << ':' << ' '
-        str << replace_line_breaks(msg.message)
-        str << ' ' << msg.context.to_json unless msg.context.empty?
-        str << ' ' << msg.extra.to_json unless msg.extra.empty?
+        str << '[' << message.datetime.to_rfc3339 << ']' << ' '
+        str << message.channel << '.' << message.severity.to_s.upcase << ':' << ' '
+        str << replace_line_breaks(message.message)
+        str << ' ' << message.context.to_json unless message.context.empty?
+        str << ' ' << message.extra.to_json unless message.extra.empty?
       end
     end
 

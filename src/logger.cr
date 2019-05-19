@@ -72,7 +72,7 @@ module Crylog
       # Return early if no handlers handle this message.
       return false if @handlers.none?(&.handles?(msg))
 
-      # Run the loggers's processors
+      # Run the logger's processors
       @processors.each &.call msg
 
       # Run the logger's handlers.  Returning early is *bubble* was set to false.
