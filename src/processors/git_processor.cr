@@ -2,7 +2,7 @@ require "./processor"
 
 module Crylog
   struct GitProcessor < LogProcessor
-    def process(msg : Message) : Nil
+    def call(msg : Message) : Nil
       current_branch = `git branch -v --no-abbrev`
       git_info = current_branch.match /^\* (.+?)\s+([a-f0-9]{40})(?:\s|$)/
 

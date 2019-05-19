@@ -1,5 +1,7 @@
 module Crylog
+  alias LogProcessors = LogProcessor | Proc(Crylog::Message, Nil)
+
   abstract struct LogProcessor
-    abstract def process(msg : Message) : Nil
+    abstract def call(msg : Message) : Nil
   end
 end

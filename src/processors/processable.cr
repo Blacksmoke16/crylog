@@ -1,5 +1,5 @@
 # Represents handlers that can have handler specific processors.
 module Crylog::Processable
-  # The formatter to use, defaults to `LineFormatter`.
-  getter processors : Array(LogProcessor) = [] of LogProcessor
+  # The processors specific to a given handler.
+  getter processors : Array(LogProcessors) = [] of LogProcessors
 end

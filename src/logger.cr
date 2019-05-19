@@ -41,7 +41,7 @@ module Crylog
     getter handlers : Array(LogHandler) = [] of LogHandler
 
     # Processors that can add additional information to each message.
-    getter processors : Array(LogProcessor) = [] of LogProcessor
+    getter processors : Array(LogProcessors) = [] of LogProcessors
 
     # Sets the handlers to use for `self`.
     def handlers=(handlers : Array(LogHandler)) : self
@@ -50,7 +50,7 @@ module Crylog
     end
 
     # Sets the processors to use for `self`.
-    def processors=(processors : Array(LogProcessor)) : self
+    def processors=(processors : Array(LogProcessors)) : self
       @processors = processors
       self
     end
@@ -73,7 +73,7 @@ module Crylog
       return false if @handlers.none?(&.handles?(msg))
 
       # Run the loggers's processors
-      @processors.each &.process msg
+      @processors.each &.call msg
 
       # Run the logger's handlers.  Returning early is *bubble* was set to false.
       @handlers.each do |handler|

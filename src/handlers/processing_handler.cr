@@ -17,7 +17,7 @@ module Crylog
       return false unless self.handles? message
 
       # Run `self`'s procesors
-      @processors.each &.process message
+      @processors.each &.call message
 
       # Call the formatter to format *message*.
       message.formatted = formatter.format message

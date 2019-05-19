@@ -9,7 +9,7 @@ require "./registry"
 
 module Crylog
   # :nodoc:
-  alias Context = Nil | String | Int64 | Float64 | Bool | Hash(String, Context)
+  alias Context = Nil | String | Int8 | Int16 | Int32 | Int64 | UInt8 | UInt16 | UInt32 | UInt64 | Float32 | Float64 | Bool | Hash(String, Context)
   alias LogContext = Hash(String, Context)
 
   # The channel to use when no channel is supplied to `.logger`.
@@ -20,7 +20,7 @@ module Crylog
     Registry.loggers[channel]? || raise "Requested '#{channel}' logger instance has not been registered."
   end
 
-  # Configures `Crylog`.  Defines the logger channels.
+  # Configures `Crylog`.  Defines the logger instances.
   def self.configure(&block : Registry.class -> Nil)
     yield Registry
   end
