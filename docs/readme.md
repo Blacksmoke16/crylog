@@ -26,7 +26,7 @@ Convenience methods are defined for each i.e. `logger.info`, `logger.alert`, etc
 
 ## Logger
 
-The core class of `Crylog` is the `Crylog::Logger`.  A `Crylog::Logger` instance is what is used to log a message.  Each instance has a name, or channel, that is used to identify that specific `Logger` instance.  
+The core class of `Crylog` is the `Crylog::Logger`.  A `Crylog::Logger` instance is what is used to log a message.  Each instance has a name, or channel, that is used to identify that specific `Crylog::Logger` instance.  
 
 `Crylog::Logger` instances can be defined via the `Crylog.configure` method.
 
@@ -48,7 +48,7 @@ Crylog.configure do |registry|
 end
 ```
 
-This registers two `Logger` instances with the name `main`, and `worker` each with a single handler that will print each message to standard out.  Each `Crylog::Logger` instance can have their own handlers, processors, and formatters.
+This registers two `Crylog::Logger` instances with the name `main`, and `worker` each with a single handler that will print each message to standard out.  Each `Crylog::Logger` instance can have their own handlers, processors, and formatters.
 
 A `Crylog::Logger` instance can be retrieved by using the `Crylog.logger(channel : String)` method.
 
@@ -191,7 +191,7 @@ main_logger.info "With processor"
 STDOUT # => [2019-05-19T01:59:02.841349000Z] main.INFO: With processor {"some_key":"Hello world!"}
 ```
 
-The main benefit of a processor, is adding information that would apply to _EVERY_ logged message, as opposed to `context` which is just applied for messaged logged via that specific method.  A common example of this could be the currently logged in user/customer ids.
+The main benefit of a processor, is adding information that would apply to _EVERY_ logged message, as opposed to `context` which is just applied for messages logged via that specific method.  A common example of this could be the currently logged in user/customer ids.
 
 ### Custom Processors
 
@@ -288,4 +288,4 @@ STDOUT # => Some event Logged at 2019-05-19 22:53:17 UTC
 
 ### Overriding Default Formatter
 
-A handler can also override the `default_formatter : Crylog::Formatters::LogFormatter` method, which returns the formatter to use for that handler and its children.  This is most helpful for when working with abstract handlers, for example there could be an an `abstract struct MailHandler` that overrides it and sets the default formatter to use an HTML formatter.
+A handler can also override the `default_formatter : Crylog::Formatters::LogFormatter` method, which returns the formatter to use for that handler and its children.  This is most helpful for when working with abstract handlers, for example there could be an an `abstract struct MailHandler` that overrides it and sets the default formatter to use an HTML formatter.

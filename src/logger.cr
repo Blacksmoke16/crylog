@@ -43,6 +43,9 @@ module Crylog
     # Processors registered on `self`.
     getter processors : Array(Crylog::Processors::LogProcessors) = [] of Crylog::Processors::LogProcessors
 
+    # The channel `self` belongs to.
+    getter channel : String
+
     # Sets the handlers to use for `self`.
     def handlers=(handlers : Array(Crylog::Handlers::LogHandler)) : self
       @handlers = handlers
@@ -58,6 +61,11 @@ module Crylog
     # Creates a new `Logger` with the provided *channel*.
     def initialize(@channel : String); end
 
+    # Closes each handler defined on `self`.
+    def close
+      @handlers.each &.close
+    end
+
     {% for name in Crylog::Severity.constants %}
       # Logs *message* and optionally *context* with `Crylog::Severity::{{name}}` severity.
       def {{name.id.downcase}}(message : String, context : Crylog::LogContext = Hash(String, Crylog::Context).new) : Nil
@@ -66,8 +74,8 @@ module Crylog
     {% end %}
 
     # :nodoc:
-    private def log(severity : Severity, message : String, context : Crylog::LogContext = Hash(String, Crylog::Context).new) : Nil
-      msg = Message.new message, context, severity, @channel, Time.utc, Hash(String, Crylog::Context).new
+    private def log(severity : Crylog::Severity, message : String, context : Crylog::LogContext = Hash(String, Crylog::Context).new) : Nil
+      msg = Crylog::Message.new message, context, severity, @channel, Time.utc, Hash(String, Crylog::Context).new
 
       # Return early if no handlers handle this message.
       return false if @handlers.none?(&.handles?(msg))

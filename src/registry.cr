@@ -13,5 +13,11 @@ module Crylog
     def self.clear : Hash(String, Crylog::Logger)
       @@loggers.clear
     end
+
+    # Closes all handlers on each logger.
+    def self.close
+      @@loggers.values.each &.close
+      @@loggers.clear
+    end
   end
 end

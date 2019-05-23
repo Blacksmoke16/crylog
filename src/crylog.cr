@@ -31,4 +31,7 @@ module Crylog
   def self.configure(&block : Registry.class -> Nil)
     yield Registry
   end
+
+  # Close all handlers upon exit.
+  at_exit { Crylog::Registry.close }
 end

@@ -22,5 +22,10 @@ module Crylog::Handlers
 
       @io.flush
     end
+
+    # Closes *io*.
+    def close
+      @io.closed? || @io.close
+    end
   end
 end
