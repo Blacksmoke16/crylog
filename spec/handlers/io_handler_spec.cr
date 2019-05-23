@@ -21,8 +21,7 @@ describe Crylog::Handlers::IOHandler do
   describe "#close" do
     it "be able to close the IO" do
       io = IO::Memory.new
-      handler = Crylog::Handlers::IOHandler.new io
-      handler.close
+      handler = Crylog::Handlers::IOHandler.new(io).close
       io.closed?.should be_true
       io.close.should be_true
     end
