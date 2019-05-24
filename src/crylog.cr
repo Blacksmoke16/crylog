@@ -23,12 +23,12 @@ module Crylog
   class_property default_channel : String = "main"
 
   # Returns a `Crylog::Logger` for the provided *channel*.
-  def self.logger(channel : String = Crylog.default_channel)
+  def self.logger(channel : String = Crylog.default_channel) : Crylog::Logger
     Registry.loggers[channel]? || raise "Requested '#{channel}' logger instance has not been registered."
   end
 
   # Configures `Crylog`.  Defines the logger instances.
-  def self.configure(&block : Registry.class -> Nil)
+  def self.configure(&block : Registry.class -> Nil) : Nil
     yield Registry
   end
 

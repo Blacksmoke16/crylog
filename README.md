@@ -4,6 +4,11 @@
 
 Flexible logging framework based on [Monolog](https://github.com/Seldaek/monolog).
 
+## Roadmap
+Currently, the base functionality is complete.  
+
+If someones wishes to make a PR and "own" a specific handler (or formatter/processor), I would welcome the PR.  Maintainers, with their handlers, will be listed at the bottom.  Otherwise, feel free to create an issue.
+
 ## Documentation
 
 [Documentation](./docs)

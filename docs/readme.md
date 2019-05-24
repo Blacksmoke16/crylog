@@ -26,7 +26,7 @@ Convenience methods are defined for each i.e. `logger.info`, `logger.alert`, etc
 
 ## Logger
 
-The core class of `Crylog` is the `Crylog::Logger`.  A `Crylog::Logger` instance is what is used to log a message.  Each instance has a name, or channel, that is used to identify that specific `Crylog::Logger` instance.  
+The core class of `Crylog` is the `Crylog::Logger`.  A `Crylog::Logger` instance is what is used to log a message.  Each instance has a name, or channel, that is used to identify that specific instance.  
 
 `Crylog::Logger` instances can be defined via the `Crylog.configure` method.
 
@@ -65,6 +65,8 @@ worker_logger = Crylog.logger "worker"
 worker_logger.debug "Hello from the worker!"
 STDOUT # => [2019-05-19T00:45:05.558218000Z] worker.DEBUG: Hello from the worker!
 ```
+
+The channel that logged each message is included within the logged message to allow for easy searching.
 
 ### Context
 
@@ -132,7 +134,7 @@ end
 main_logger = Crylog.logger
 main_logger.info "Only printed once"
 STDOUT # => [2019-05-19T01:11:04.046208000Z] main.INFO: Only printed once
-STDOUT # => The message is only printed once since the first `IOHandler` does not allow messages to continue
+STDOUT # => The message is only printed once since the first `IOHandler` does not allow messages to "bubble" up throught the array
 ```
 
 ### Custom Handlers
