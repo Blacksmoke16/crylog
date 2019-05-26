@@ -17,11 +17,21 @@ describe Crylog::Handlers::IOHandler do
   end
 
   describe "#close" do
-    it "be able to close the IO" do
-      io = IO::Memory.new
-      Crylog::Handlers::IOHandler.new(io).close
-      io.closed?.should be_true
-      io.close.should be_true
+    describe "with a file" do
+      it "be able to close the IO" do
+        file = File.tempfile("log.out")
+        Crylog::Handlers::IOHandler.new(file).close
+        file.closed?.should be_true
+        file.delete
+      end
+    end
+
+    describe "with a normal IO" do
+      it "be able to close the IO" do
+        io = IO::Memory.new
+        Crylog::Handlers::IOHandler.new(io).close
+        io.closed?.should be_false
+      end
     end
   end
 end

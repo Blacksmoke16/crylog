@@ -6,7 +6,7 @@ module Crylog::Processors
     # Adds metadata to *message*.
     def call(message : Crylog::Message) : Nil
       current_branch = `git branch -v --no-abbrev`
-      git_info = current_branch.match /^\* (.+?)\s+([a-f0-9]{40})(?:\s|$)/
+      git_info = current_branch.match /^\* (.+?)\s+([a-f0-9]{40})(?:\s|$)/m
 
       return unless git_info
 
