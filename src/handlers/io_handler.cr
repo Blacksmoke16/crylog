@@ -23,9 +23,11 @@ module Crylog::Handlers
       @io.flush
     end
 
-    # Closes *io*.
-    def close
-      @io.closed? || @io.close
+    # Closes *io* if it is a `File`.
+    def close : Nil
+      if (io = @io) && io.is_a?(File)
+        io.closed? || io.close
+      end
     end
   end
 end

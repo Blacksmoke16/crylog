@@ -53,7 +53,7 @@ module Crylog
     end
 
     # Sets the processors to use for `self`.
-    def processors=(processors : Array(Crylog::Handlers::LogProcessors)) : self
+    def processors=(processors : Array(Crylog::Processors::LogProcessors)) : self
       @processors = processors
       self
     end
@@ -68,17 +68,17 @@ module Crylog
 
     {% for name in Crylog::Severity.constants %}
       # Logs *message* and optionally *context* with `Crylog::Severity::{{name}}` severity.
-      def {{name.id.downcase}}(message : String, context : Crylog::LogContext = Hash(String, Crylog::Context).new) : Nil
+      def {{name.id.downcase}}(message : String?, context : Crylog::LogContext = Hash(String, Crylog::Context).new) : Nil
         log Crylog::Severity::{{name.id}}, message, context
       end
     {% end %}
 
     # :nodoc:
-    private def log(severity : Crylog::Severity, message : String, context : Crylog::LogContext = Hash(String, Crylog::Context).new) : Nil
-      msg = Crylog::Message.new message, context, severity, @channel, Time.utc, Hash(String, Crylog::Context).new
+    private def log(severity : Crylog::Severity, message : String?, context : Crylog::LogContext = Hash(String, Crylog::Context).new) : Nil
+      msg = Crylog::Message.new message || "", context, severity, @channel, Time.utc, Hash(String, Crylog::Context).new
 
       # Return early if no handlers handle this message.
-      return false if @handlers.none?(&.handles?(msg))
+      return if @handlers.none?(&.handles?(msg))
 
       # Run the logger's processors
       @processors.each &.call msg
