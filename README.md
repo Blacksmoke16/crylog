@@ -4,7 +4,6 @@
 
 Flexible logging framework based on [Monolog](https://github.com/Seldaek/monolog).
 
-
 ## Roadmap
 Currently, the base functionality is complete.  
 
