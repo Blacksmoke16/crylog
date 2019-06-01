@@ -2,28 +2,6 @@
 
 Crylog is a flexible logging framework based on [Monolog](https://github.com/Seldaek/monolog).  It allows sending log messages to various locations such as files, external web services, and/or databases.
 
-## Core Concepts
-
-* Logger - An instance of `Crylog::Logger` that logs messages, optionally with context. 
-* Handler - Writes the log message to somewhere/something.
-* Processor - Adds metadata to each logged message.
-* Formatter - Determines how a logged message appears.
-
-### Severity
-
-`Crylog` uses the log levels as described in [RFC 5424](https://tools.ietf.org/html/rfc5424#section-6.2.1):
-
-- Emergency: system is unusable
-- Alert: action must be taken immediately
-- Critical: critical conditions
-- Error: error conditions
-- Warning: warning conditions
-- Notice: normal but significant condition
-- Informational: informational messages
-- Debug: debug-level messages
-
-Convenience methods are defined for each i.e. `logger.info`, `logger.alert`, etc.
-
 ## Logger
 
 The core class of `Crylog` is the `Crylog::Logger`.  A `Crylog::Logger` instance is what is used to log a message.  Each instance has a name, or channel, that is used to identify that specific instance.  

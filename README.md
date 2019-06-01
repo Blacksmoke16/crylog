@@ -4,12 +4,35 @@
 
 Flexible logging framework based on [Monolog](https://github.com/Seldaek/monolog).
 
+
 ## Roadmap
 Currently, the base functionality is complete.  
 
 If someones wishes to make a PR and "own" a specific handler (or formatter/processor), I would welcome the PR.  Maintainers, with their handlers, will be listed at the bottom.  Otherwise, feel free to create an issue.
 
-## Documentation
+## Core Concepts
+
+- Logger - An instance of `Crylog::Logger` that logs messages, optionally with context. 
+- Handler - Writes the log message to somewhere/something.
+- Processor - Adds metadata to each logged message.
+- Formatter - Determines how a logged message appears.
+
+### Severity
+
+`Crylog` uses the log levels as described in [RFC 5424](https://tools.ietf.org/html/rfc5424#section-6.2.1):
+
+- Emergency: system is unusable
+- Alert: action must be taken immediately
+- Critical: critical conditions
+- Error: error conditions
+- Warning: warning conditions
+- Notice: normal but significant condition
+- Informational: informational messages
+- Debug: debug-level messages
+
+Convenience methods are defined for each i.e. `logger.info`, `logger.alert`, etc.
+
+### Additional Documentation
 
 [Documentation](./docs)
 

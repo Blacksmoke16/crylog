@@ -13,28 +13,6 @@ describe Crylog::Logger do
     end
   end
 
-  describe "#close" do
-    it "should close all handlers" do
-      temp1 = File.tempfile
-      temp2 = File.tempfile
-
-      logger = Crylog::Logger.new("test").handlers = [
-        Crylog::Handlers::IOHandler.new(temp1),
-        Crylog::Handlers::IOHandler.new(temp2),
-      ] of Crylog::Handlers::LogHandler
-
-      temp1.closed?.should be_false
-      temp2.closed?.should be_false
-
-      logger.close
-
-      temp1.closed?.should be_true
-      temp2.closed?.should be_true
-
-      temp1.delete
-      temp2.delete
-    end
-  end
   describe "#log" do
     it "should log a string" do
       handler = Crylog::Handlers::TestHandler.new
