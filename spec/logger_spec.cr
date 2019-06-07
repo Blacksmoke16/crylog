@@ -1,4 +1,5 @@
 require "./spec_helper"
+require "colorize"
 
 describe Crylog::Logger do
   describe "#handlers" do
@@ -23,12 +24,30 @@ describe Crylog::Logger do
       handler.messages.first.context.should eq Hash(String, Crylog::Context).new
     end
 
+    it "should log a colorized string" do
+      handler = Crylog::Handlers::TestHandler.new
+      logger = Crylog::Logger.new("test").handlers = [handler] of Crylog::Handlers::LogHandler
+      logger.debug "I'm red".colorize :red
+
+      handler.messages.first.message.should eq "\e[31mI'm red\e[0m"
+      handler.messages.first.context.should eq Hash(String, Crylog::Context).new
+    end
+
     it "should log nil" do
       handler = Crylog::Handlers::TestHandler.new
       logger = Crylog::Logger.new("test").handlers = [handler] of Crylog::Handlers::LogHandler
       logger.debug nil
 
       handler.messages.first.message.should eq ""
+      handler.messages.first.context.should eq Hash(String, Crylog::Context).new
+    end
+
+    it "should stringify whatever is logged" do
+      handler = Crylog::Handlers::TestHandler.new
+      logger = Crylog::Logger.new("test").handlers = [handler] of Crylog::Handlers::LogHandler
+      logger.debug 123
+
+      handler.messages.first.message.should eq "123"
       handler.messages.first.context.should eq Hash(String, Crylog::Context).new
     end
 
