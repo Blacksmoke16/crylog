@@ -1,6 +1,9 @@
 require "spec"
 require "../src/crylog"
 
+TIME_REGEX      = /\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{9}Z/
+JSON_TIME_REGEX = /\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z/
+
 Spec.before_each { Crylog::Registry.close }
 
 # Creates and returns a `Crylog::Message` with the provided options.

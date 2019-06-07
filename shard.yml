@@ -3,7 +3,7 @@ name: crylog
 description: |
   Flexible logger framework for Crystal based on Monolog.
 
-version: 0.1.0
+version: 0.1.1
 
 authors:
   - Blacksmoke16 <Blacksmoke16@eve.tools>
@@ -15,4 +15,4 @@ license: MIT
 development_dependencies:
   ameba:
     github: veelenga/ameba
-    version: ~> 0.9.0
+    version: ~> 0.10.0

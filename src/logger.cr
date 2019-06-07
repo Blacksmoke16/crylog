@@ -68,8 +68,8 @@ module Crylog
 
     {% for name in Crylog::Severity.constants %}
       # Logs *message* and optionally *context* with `Crylog::Severity::{{name}}` severity.
-      def {{name.id.downcase}}(message : String?, context : Crylog::LogContext = Hash(String, Crylog::Context).new) : Nil
-        log Crylog::Severity::{{name.id}}, message, context
+      def {{name.id.downcase}}(message, context : Crylog::LogContext = Hash(String, Crylog::Context).new) : Nil
+        log Crylog::Severity::{{name.id}}, message.to_s, context
       end
     {% end %}
 

@@ -1,8 +1,6 @@
 require "../spec_helper"
 
-TIME_REGEX = /\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{9}Z/
-
-describe Crylog::Processors::GitProcessor do
+describe Crylog::Formatters::LineFormatter do
   describe "#call" do
     describe "with line breaks not allowed" do
       describe "without context/extra" do

@@ -1,6 +1,10 @@
+require "json"
+
 module Crylog
   # Represents a logged message and its metadata.
   class Message
+    include JSON::Serializable
+
     # The message that was logged.
     getter message : String
 
@@ -20,6 +24,7 @@ module Crylog
     getter context : Hash(String, Crylog::Context)
 
     # Represents the formatted version of this message.
+    @[JSON::Field(ignore: true)]
     property formatted : String = ""
 
     def initialize(@message : String, @context : Hash(String, Crylog::Context), @severity : Crylog::Severity, @channel : String, @datetime : Time, @extra : Hash(String, Crylog::Context)); end
