@@ -9,7 +9,7 @@ module Crylog::Handlers
     end
 
     # Writes *message* to the given *io*.
-    def write(message : Crylog::Message)
+    def write(message : Crylog::Message) : Nil
       if (io = @io) && io.is_a?(File) && @lock
         io.flock_exclusive
       end

@@ -1,11 +1,19 @@
 language: crystal
+crystal:
+  - latest
+  - nightly
+
 install:
   - shards install
 
-script:
+before_script:
   - bin/ameba
   - crystal tool format --check
+
+script:
   - crystal spec --warnings all --error-on-warnings
+
+after_success:
   - crystal docs
 
 deploy:
@@ -15,5 +23,4 @@ deploy:
   keep-history: false
   local-dir: docs
   on:
-    branch: master
     condition: "$TRAVIS_EVENT_TYPE != cron"

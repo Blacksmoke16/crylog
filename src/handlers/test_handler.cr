@@ -9,7 +9,7 @@ module Crylog::Handlers
     getter messages : Array(Crylog::Message) = [] of Crylog::Message
 
     # Adds *message* to the array of handled messages.
-    def write(message : Crylog::Message)
+    def write(message : Crylog::Message) : Nil
       @messages << message
     end
   end
