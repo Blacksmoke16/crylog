@@ -33,6 +33,14 @@ module Crylog
 
     # Urgent alert.
     Emergency = 600
+
+    # :nodoc:
+    @@upcase_pool = Hash(Severity, String).new
+
+    # Returns memoized upcased String.  Used in Formatter.
+    def upcase_to_s
+      @@upcase_pool[self] ||= self.to_s.upcase
+    end
   end
 
   # A logger instance.
@@ -68,14 +76,21 @@ module Crylog
 
     {% for name in Crylog::Severity.constants %}
       # Logs *message* and optionally *context* with `Crylog::Severity::{{name}}` severity.
-      def {{name.id.downcase}}(message, context : Crylog::LogContext = Hash(String, Crylog::Context).new) : Nil
-        log Crylog::Severity::{{name.id}}, message.to_s, context
+      def {{name.id.downcase}}(message, context : Crylog::LogContext? = nil) : Nil
+        {{name.id.downcase}} do
+          { message.to_s, context }
+        end
+      end
+
+      # Logs *message* and optionally *context* with `Crylog::Severity::{{name}}` severity.
+      # Block is only evaluated if the message is logged.
+      def {{name.id.downcase}}(&block : -> Crylog::MsgType) : Nil
+        log Crylog::Severity::{{name.id}}, &block
       end
     {% end %}
 
-    # :nodoc:
-    private def log(severity : Crylog::Severity, message : String?, context : Crylog::LogContext = Hash(String, Crylog::Context).new) : Nil
-      msg = Crylog::Message.new message || "", context, severity, @channel, Time.utc, Hash(String, Crylog::Context).new
+    private def log(severity : Crylog::Severity, &block : -> Crylog::MsgType) : Nil
+      msg = Crylog::Message.new severity, @channel, &block
 
       # Return early if no handlers handle this message.
       return if @handlers.none?(&.handles?(msg))
