@@ -13,7 +13,7 @@ module Crylog
   alias Context = Nil | String | Int8 | Int16 | Int32 | Int64 | UInt8 | UInt16 | UInt32 | UInt64 | Float32 | Float64 | Bool | Hash(String, Crylog::Context) | Array(Crylog::Context)
 
   # :nodoc:
-  alias MsgType = {String, Crylog::LogContext?} | String
+  alias MsgType = Tuple(String, Crylog::LogContext?) | String
 
   # Convenience alias for creating `Crylog::Message#context` and `Crylog::Message#extra` hashes.
   #

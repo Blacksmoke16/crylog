@@ -11,7 +11,7 @@ module Crylog::Formatters
     def call(message : Crylog::Message) : String
       sdatetime = message.datetime.to_rfc3339
       schannel = message.channel
-      sseverity = message.severity.upcase_to_s
+      sseverity = message.severity.to_s
       smessage = message.message? ? replace_line_breaks(message.message) : nil
       scontext = message.context? ? message.context.to_json : nil
       sextra = message.extra? ? message.extra.to_json : nil

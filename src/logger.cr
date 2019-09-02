@@ -34,12 +34,18 @@ module Crylog
     # Urgent alert.
     Emergency = 600
 
-    # :nodoc:
-    @@upcase_pool = Hash(Severity, String).new
-
-    # Returns memoized upcased String.  Used in Formatter.
-    def upcase_to_s
-      @@upcase_pool[self] ||= self.to_s.upcase
+    def to_s
+      case self
+      when .debug?     then "DEBUG"
+      when .info?      then "INFO"
+      when .notice?    then "NOTICE"
+      when .warning?   then "WARNING"
+      when .error?     then "ERROR"
+      when .critical?  then "CRITICAL"
+      when .alert?     then "ALERT"
+      when .emergency? then "EMERGENCY"
+      else                  raise "unknown #{super}"
+      end
     end
   end
 
