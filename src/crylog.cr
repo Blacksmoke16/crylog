@@ -12,6 +12,9 @@ module Crylog
   # The possible types the value could be in `Crylog::Message#context` and `Crylog::Message#extra` hashes.
   alias Context = Nil | String | Int8 | Int16 | Int32 | Int64 | UInt8 | UInt16 | UInt32 | UInt64 | Float32 | Float64 | Bool | Hash(String, Crylog::Context) | Array(Crylog::Context)
 
+  # :nodoc:
+  alias MsgType = Tuple(String, Crylog::LogContext?) | String
+
   # Convenience alias for creating `Crylog::Message#context` and `Crylog::Message#extra` hashes.
   #
   # ```

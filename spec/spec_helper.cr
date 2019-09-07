@@ -14,5 +14,13 @@ def create_message(
   severity : Crylog::Severity = Crylog::Severity::Debug,
   extra : Hash(String, Crylog::Context) = Hash(String, Crylog::Context).new
 ) : Crylog::Message
-  Crylog::Message.new message, context, severity, "test", Time.utc, extra
+  crymsg = Crylog::Message.new severity, "test" do
+    {message, context}
+  end
+
+  extra.each do |key, val|
+    crymsg.extra[key] = val
+  end
+
+  crymsg
 end
