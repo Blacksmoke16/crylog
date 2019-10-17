@@ -3,12 +3,12 @@ name: crylog
 description: |
   Flexible logger framework for Crystal based on Monolog.
 
-version: 0.1.2
+version: 0.1.4
 
 authors:
   - Blacksmoke16 <Blacksmoke16@eve.tools>
 
-crystal: 0.28.0
+crystal: 0.31.1
 
 license: MIT
 
