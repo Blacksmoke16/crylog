@@ -1,5 +1,6 @@
 require "json"
 
+require "./crylog_logger"
 require "./formatters/*"
 require "./handlers/*"
 require "./logger"
