@@ -46,6 +46,35 @@ STDOUT # => [2019-05-19T00:45:05.558218000Z] worker.DEBUG: Hello from the worker
 
 The channel that logged each message is included within the logged message to allow for easy searching.
 
+### CrylogLogger
+
+`Crylog` provides another similar class, `Crylog::CrylogLogger`, in order to provide compatibility with the standard library's `::Logger` class.  This class allows using `Crylog` with a property/variable typed to `::Logger`.
+
+```crystal
+Crylog.configure do |registry|
+  registry.register "main" do |logger|
+    logger.handlers = [
+      Crylog::Handlers::IOHandler.new STDOUT,
+    ] of Crylog::Handlers::LogHandler
+  end
+end
+
+one : ::Logger = Logger.new STDOUT
+two : ::Logger = Crylog::CrylogLogger.new
+
+one.warn "FOO" # => W, [2019-10-15 19:17:26 -04:00 #19986]  WARN -- : FOO
+two.warn "FOO" # => [2019-10-15T23:17:26.042287000Z] main.WARNING: FOO
+```
+
+`Crylog::CrylogLogger#new` accepts a channel to allowing using different `Crylog::Logger` instances depending on the context.  
+
+```crystal
+main_logger = Crylog::CrylogLogger.new
+database_logger = Crylog::CrylogLogger.new "database"
+```
+
+`Crylog::CrylogLogger` defines all the logging methods that `Crylog::Logger` implements, as well as maps `::Logger::Severity` methods to `Crylog::Severity` methods, i.e. `warn => warning` or `fatal => critical`.
+
 ### Context
 
 Extra data can be added to the logged message via the optional `context` argument on each severity's method.  This argument accepts a hash of data that will, by default, be JSON encoded into the logged message.  This however can be changed by using a custom handler formatter.
