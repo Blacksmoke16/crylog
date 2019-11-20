@@ -40,9 +40,9 @@ class Crylog::CrylogLogger < ::Logger
     end
 
     # Logs *message* and optionally *context* with `Crylog::Severity::{{name}}` severity.
-    # Block is only evaluated if the message is logged.
-    def {{name.id.downcase}}(&block : -> Crylog::MsgType) : Nil
-      @logger.{{name.id.downcase}} &block
+    # Block is evaluated at least once due to https://github.com/crystal-lang/crystal/issues/8485.
+    def {{name.id.downcase}}(& : -> Crylog::MsgType) : Nil
+      @logger.{{name.id.downcase}} yield
     end
   {% end %}
 
@@ -54,9 +54,9 @@ class Crylog::CrylogLogger < ::Logger
     end
 
     # Logs *message* and optionally *context* with `Crylog::Severity::{{crylog.camelcase.id}}` severity.
-    # Block is only evaluated if the message is logged.
-    def {{logger.id}}(&block : -> Crylog::MsgType) : Nil
-      @logger.{{crylog.id}} &block
+    # Block is evaluated at least once due to https://github.com/crystal-lang/crystal/issues/8485.
+    def {{logger.id}}(& : -> Crylog::MsgType) : Nil
+      @logger.{{crylog.id}} yield
     end
   {% end %}
 end
