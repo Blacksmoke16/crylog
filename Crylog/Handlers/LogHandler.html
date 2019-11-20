@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Crystal Docs 0.30.1">
+
+
+<link href="../../css/style.css" rel="stylesheet" type="text/css">
+
+<script type="text/javascript" src="../../js/doc.js"></script>
+<script type="text/javascript">
+  CrystalDoc.base_path = "../../";
+</script>
+
+  <meta id="repository-name" content="github.com/Blacksmoke16/crylog">
+  <title>Crylog::Handlers::LogHandler - github.com/Blacksmoke16/crylog</title>
+</head>
+<body>
+
+<div class="sidebar">
+  <div class="sidebar-header">
+    <div class="search-box">
+      <input type="search" class="search-input" placeholder="Search..." spellcheck="false" aria-label="Search">
+    </div>
+
+    <div class="repository-links">
+      <a href="../../index.html">README</a>
+    </div>
+  </div>
+
+  <div class="search-results" class="hidden">
+    <ul class="search-list"></ul>
+  </div>
+
+  <div class="types-list">
+    <ul>
+  
+  <li class="parent open current" data-id="github.com/Blacksmoke16/crylog/Crylog" data-name="crylog">
+      <a href="../../Crylog.html">Crylog</a>
+      
+        <ul>
+  
+  <li class=" " data-id="github.com/Blacksmoke16/crylog/Crylog/Context" data-name="crylog::context">
+      <a href="../../Crylog/Context.html">Context</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/Blacksmoke16/crylog/Crylog/CrylogLogger" data-name="crylog::cryloglogger">
+      <a href="../../Crylog/CrylogLogger.html">CrylogLogger</a>
+      
+    </li>
+  
+  <li class="parent " data-id="github.com/Blacksmoke16/crylog/Crylog/Formatters" data-name="crylog::formatters">
+      <a href="../../Crylog/Formatters.html">Formatters</a>
+      
+        <ul>
+  
+  <li class=" " data-id="github.com/Blacksmoke16/crylog/Crylog/Formatters/Formattable" data-name="crylog::formatters::formattable">
+      <a href="../../Crylog/Formatters/Formattable.html">Formattable</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/Blacksmoke16/crylog/Crylog/Formatters/JsonFormatter" data-name="crylog::formatters::jsonformatter">
+      <a href="../../Crylog/Formatters/JsonFormatter.html">JsonFormatter</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/Blacksmoke16/crylog/Crylog/Formatters/LineFormatter" data-name="crylog::formatters::lineformatter">
+      <a href="../../Crylog/Formatters/LineFormatter.html">LineFormatter</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/Blacksmoke16/crylog/Crylog/Formatters/LogFormatter" data-name="crylog::formatters::logformatter">
+      <a href="../../Crylog/Formatters/LogFormatter.html">LogFormatter</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/Blacksmoke16/crylog/Crylog/Formatters/LogFormatters" data-name="crylog::formatters::logformatters">
+      <a href="../../Crylog/Formatters/LogFormatters.html">LogFormatters</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent open current" data-id="github.com/Blacksmoke16/crylog/Crylog/Handlers" data-name="crylog::handlers">
+      <a href="../../Crylog/Handlers.html">Handlers</a>
+      
+        <ul>
+  
+  <li class=" " data-id="github.com/Blacksmoke16/crylog/Crylog/Handlers/AbstractLogHandler" data-name="crylog::handlers::abstractloghandler">
+      <a href="../../Crylog/Handlers/AbstractLogHandler.html">AbstractLogHandler</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/Blacksmoke16/crylog/Crylog/Handlers/IOHandler" data-name="crylog::handlers::iohandler">
+      <a href="../../Crylog/Handlers/IOHandler.html">IOHandler</a>
+      
+    </li>
+  
+  <li class=" current" data-id="github.com/Blacksmoke16/crylog/Crylog/Handlers/LogHandler" data-name="crylog::handlers::loghandler">
+      <a href="../../Crylog/Handlers/LogHandler.html">LogHandler</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/Blacksmoke16/crylog/Crylog/Handlers/NoopHandler" data-name="crylog::handlers::noophandler">
+      <a href="../../Crylog/Handlers/NoopHandler.html">NoopHandler</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/Blacksmoke16/crylog/Crylog/Handlers/NullHandler" data-name="crylog::handlers::nullhandler">
+      <a href="../../Crylog/Handlers/NullHandler.html">NullHandler</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/Blacksmoke16/crylog/Crylog/Handlers/ProcessingLogHandler" data-name="crylog::handlers::processingloghandler">
+      <a href="../../Crylog/Handlers/ProcessingLogHandler.html">ProcessingLogHandler</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/Blacksmoke16/crylog/Crylog/Handlers/TestHandler" data-name="crylog::handlers::testhandler">
+      <a href="../../Crylog/Handlers/TestHandler.html">TestHandler</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="github.com/Blacksmoke16/crylog/Crylog/LogContext" data-name="crylog::logcontext">
+      <a href="../../Crylog/LogContext.html">LogContext</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/Blacksmoke16/crylog/Crylog/Logger" data-name="crylog::logger">
+      <a href="../../Crylog/Logger.html">Logger</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/Blacksmoke16/crylog/Crylog/Message" data-name="crylog::message">
+      <a href="../../Crylog/Message.html">Message</a>
+      
+    </li>
+  
+  <li class="parent " data-id="github.com/Blacksmoke16/crylog/Crylog/Processors" data-name="crylog::processors">
+      <a href="../../Crylog/Processors.html">Processors</a>
+      
+        <ul>
+  
+  <li class=" " data-id="github.com/Blacksmoke16/crylog/Crylog/Processors/GitProcessor" data-name="crylog::processors::gitprocessor">
+      <a href="../../Crylog/Processors/GitProcessor.html">GitProcessor</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/Blacksmoke16/crylog/Crylog/Processors/LogProcessor" data-name="crylog::processors::logprocessor">
+      <a href="../../Crylog/Processors/LogProcessor.html">LogProcessor</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/Blacksmoke16/crylog/Crylog/Processors/LogProcessors" data-name="crylog::processors::logprocessors">
+      <a href="../../Crylog/Processors/LogProcessors.html">LogProcessors</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/Blacksmoke16/crylog/Crylog/Processors/Processable" data-name="crylog::processors::processable">
+      <a href="../../Crylog/Processors/Processable.html">Processable</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="github.com/Blacksmoke16/crylog/Crylog/Registry" data-name="crylog::registry">
+      <a href="../../Crylog/Registry.html">Registry</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/Blacksmoke16/crylog/Crylog/Severity" data-name="crylog::severity">
+      <a href="../../Crylog/Severity.html">Severity</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+  </div>
+</div>
+
+
+<div class="main-content">
+<h1 class="type-name">
+
+  <span class="kind">abstract struct</span> Crylog::Handlers::LogHandler
+
+</h1>
+
+
+  <ul class="superclass-hierarchy"><li class="superclass"><a href="../../Crylog/Handlers/LogHandler.html">Crylog::Handlers::LogHandler</a></li><li class="superclass">Struct</li><li class="superclass">Value</li><li class="superclass">Object</li></ul>
+
+
+
+
+  <h2>Overview</h2>
+
+  <p>Base struct of all handlers.</p>
+
+
+
+
+
+
+
+
+
+  <h2>Direct Known Subclasses</h2>
+  <ul class="other-types-list">
+  
+    <li class="other-type"><a href="../../Crylog/Handlers/AbstractLogHandler.html">Crylog::Handlers::AbstractLogHandler</a></li>
+  
+    <li class="other-type"><a href="../../Crylog/Handlers/NoopHandler.html">Crylog::Handlers::NoopHandler</a></li>
+  
+    <li class="other-type"><a href="../../Crylog/Handlers/NullHandler.html">Crylog::Handlers::NullHandler</a></li>
+  
+  </ul>
+
+
+
+
+
+
+  <h2>Defined in:</h2>
+  
+    
+      <a href="https://github.com/Blacksmoke16/crylog/blob/32cbecf4575883aa5dcd8c4877b0047f288dac6c/src/handlers/handler.cr#L4" target="_blank">
+        handlers/handler.cr
+      </a>
+    
+    <br/>
+  
+
+
+
+
+
+  <h2>Constructors</h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#new-class-method" class="signature"><strong>.new</strong></a>
+        
+      </li>
+    
+  </ul>
+
+
+
+
+
+  <h2>Instance Method Summary</h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#close-instance-method" class="signature"><strong>#close</strong></a>
+        
+          <div class="summary"><p>Called when the application exits.</p></div>
+        
+      </li>
+    
+  </ul>
+
+
+
+
+
+<div class="methods-inherited">
+  
+    
+
+
+    
+
+
+    
+
+
+  
+    
+
+
+    
+
+
+    
+
+
+  
+    
+
+
+    
+
+
+    
+
+
+  
+</div>
+
+
+  <h2>Constructor Detail</h2>
+  
+    <div class="entry-detail" id="new-class-method">
+      <div class="signature">
+        
+        def self.<strong>new</strong>
+
+        <a class="method-permalink" href="#new-class-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Blacksmoke16/crylog/blob/32cbecf4575883aa5dcd8c4877b0047f288dac6c/src/handlers/handler.cr#L4" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+
+
+
+
+
+  <h2>Instance Method Detail</h2>
+  
+    <div class="entry-detail" id="close-instance-method">
+      <div class="signature">
+        
+        def <strong>close</strong>
+
+        <a class="method-permalink" href="#close-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Called when the application exits.  Can be used to free up resources used within the handler.
+Such as closing IOs, finalizing connections, etc.</p>
+
+<p><span class="flag purple">NOTE</span>  Implementations have to be idempotent.  Loggers sharing the same instance of a handler would be closed more than once.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Blacksmoke16/crylog/blob/32cbecf4575883aa5dcd8c4877b0047f288dac6c/src/handlers/handler.cr#L9" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+
+
+
+
+</div>
+
+</body>
+</html>
