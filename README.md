@@ -1,3 +1,5 @@
+# Deprecated in favor of the standard library's [Log](https://crystal-lang.org/api/Log.html) module.
+
 # Crylog
 [![Build Status](https://travis-ci.org/Blacksmoke16/crylog.svg?branch=master)](https://travis-ci.org/Blacksmoke16/crylog)
 [![Latest release](https://img.shields.io/github/release/Blacksmoke16/crylog.svg?style=flat-square)](https://github.com/Blacksmoke16/crylog/releases)
